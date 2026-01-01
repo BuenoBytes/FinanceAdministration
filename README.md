@@ -1,58 +1,74 @@
-# FinanceAdm (Initial Version)
+# FinanceAdministration
 
-A lightweight, modular CLI personal finance and administration system written in Python.
+# 💰 Small Financial Administration System
 
-**Status:** Initial version — most modules have been tested locally and are working so far. This repository is an early-stage study project and may receive breaking changes during active development.
+A robust, modular Python-based financial management tool designed for personal or small business accounting. This project demonstrates advanced logic in data validation, accounting workflows (like year-end locking), and integration with banking standards (OFX).
 
-**Planned next update:** add OFX import support to automatically ingest bank/exported statements.
+![Python](https://img.shields.io/badge/python-3.10+-blue.svg)
+![Streamlit](https://img.shields.io/badge/frontend-Streamlit-FF4B4B.svg)
 
-**Contents**
-- `core.py` — domain models and managers (entities, accounts, revenues/expenses, entries)
-- `files.py` — JSON persistence helpers
-- `tools.py` — input validation helpers
-- `menu.py` — simple CLI front-end
-- `analysis.py` — report generation (financial summary)
-- `install.py` — initial data setup
+## 🌟 Key Features
 
-**Key features**
-- Entity, account and revenue/expense modeling
-- Year-based entries with opening balances and optional locking
-- Text-based financial summary reports (operational, financing, investing results)
-- Simple JSON persistence for easy inspection and portability
-- Basic input validation utilities and a small unit test suite
+* **Comprehensive Ledger Management:** Record, edit, and track revenues and expenses with categorized entries.
+* **OFX Integration:** Automatic parsing and importing of bank statement files (`.ofx`), including a "resolution" workflow for unidentified transactions.
+* **Year-End Locking (Lock Year):** A professional accounting feature that prevents modifications to past years and automatically carries forward balances to the next period.
+* **Dynamic Financial Reports:** Real-time generation of Income Statements and Cash Flow summaries using custom date intervals.
+* **Robust Data Validation:** Custom validation engine to ensure data integrity across all system modules.
 
-**Prerequisites**
-- Python 3.10 or newer
+## 🏗️ Technical Architecture
 
-**Quick start**
-1. Clone this repository or open it in a Codespace.
-2. (Optional) Create and activate a virtual environment:
+The project follows a **Modular Monolith** structure, promoting separation of concerns:
 
-```bash
-python -m venv .venv
-source .venv/bin/activate  # Linux / macOS
-.\.venv\Scripts\activate   # Windows (PowerShell)
-```
+* **`core.py`**: The heart of the system. Contains the business logic, Object-Oriented (OOP) models for Entities, Entries, and Balances, and the accounting engine.
+* **`app.py`**: The reactive frontend built with **Streamlit**, handling user interaction and state management.
+* **`ofx.py`**: Specialized module for handling external banking data and mapping it to the internal schema.
+* **`tools.py`**: A utility layer containing a custom validation class (`ObjCheck`) and secure file management.
+* **`install.py`**: Automated setup script to initialize the JSON database schema and default categories.
 
-3. Initialize core data (creates required JSON files and folders):
+## 🛠️ Tech Stack
 
-```bash
-python install.py
-```
+* **Language:** Python 3.10+
+* **Interface:** Streamlit (Web-based UI)
+* **Data Handling:** Pandas (for reporting) and JSON (for persistence)
+* **Parsing:** `ofxparse` for financial data extraction
 
-4. Run the interactive menu to manage entities, accounts, entries and reports:
+## 🚀 Getting Started
 
-```bash
-python menu.py
-```
+### Prerequisites
+* Python 3.10 or higher
+* Pip (Python package manager)
 
-5. Save files from menu options when requested. Generated reports are written to the `in_out` folder (see `menu.py`).
+### Installation
 
+1.  **Clone the repository:**
+    ```bash
+    git clone https://github.com/BuenoBytes/FinanceAdministration
+    cd FinanceAdministration
+    ```
 
-**Next immediate planned features**
-- OFX file import: parse OFX bank/export statements and create entries automatically
-- Better error handling and logging
+2.  **Install dependencies:**
+    ```bash
+    pip install streamlit pandas ofxparse
+    ```
 
-**Notes & contributions**
-- This is an initial/study project; behavior and file formats may change.
-- Contributions welcome: open an issue or a PR with suggested improvements.
+3.  **Initialize the system:**
+    Run the installer to create the necessary directory structure and configuration files.
+    ```bash
+    python install.py
+    ```
+
+4.  **Run the application:**
+    ```bash
+    python -m streamlit run app.py
+    ```
+
+## 📊 Logic & Design Philosophy
+
+This project was built with a focus on **Data Integrity**. Unlike simple trackers, this system:
+1.  Uses **Type Hinting** for better maintainability and code clarity.
+2.  Implements **Defensive Programming** via the `tools.ObjCheck` class, ensuring that no invalid strings or out-of-range values corrupt the data files.
+3.  Handles **Atomic File Saving**: Data is first written to a temporary file before replacing the original, preventing data loss during potential crashes.
+
+### Contact & Portfolio
+Developed by **[BuenoBytes]**(On GitHub).
+*Focus: Backend Development, Data Processing, and Financial Logic.*
